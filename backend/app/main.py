@@ -2,6 +2,8 @@ import os
 import yaml
 
 from fastapi import FastAPI, Body, Depends, Header, HTTPException, Query
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import select, text
@@ -13,7 +15,18 @@ from .schemas import TaskCreate, TaskUpdate, TaskOut
 
 API_KEY = "devsecops-demo-secret-<a_remplacer>"
 
+
 app = FastAPI(title="Task Manager API", version="1.0.0")
+
+# Serve static files from the frontend directory
+frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend'))
+app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+@app.get("/")
+def serve_frontend():
+    index_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/index.html'))
+    if os.path.exists(index_path):
+        return FileResponse(index_path, media_type="text/html")
+    return {"message": "Frontend not found. Please build or add index.html."}
 
 # Allow local frontend (file:// or http://localhost) during training
 app.add_middleware(
