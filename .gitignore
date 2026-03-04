@@ -15,3 +15,6 @@
 
 # Ignore SQLite database file
 backend/taskmanager.db
+
+# Ignore env files
+.env

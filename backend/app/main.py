@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import yaml
 
 from fastapi import FastAPI, Body, Depends, Header, HTTPException, Query
@@ -13,7 +14,11 @@ from .db import Base, engine, get_db
 from .models import Task
 from .schemas import TaskCreate, TaskUpdate, TaskOut
 
-API_KEY = "devsecops-demo-secret-<a_remplacer>"
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file if present
+
+load_dotenv()
+API_KEY = os.environ.get("API_KEY", "devsecops-demo-secret-CHANGEME")
 
 
 app = FastAPI(title="Task Manager API", version="1.0.0")

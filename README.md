@@ -45,3 +45,9 @@ curl -s -X PUT http://127.0.0.1:8000/tasks/1 \
 ```bash
 curl -i -X DELETE http://127.0.0.1:8000/tasks/1
 ```
+
+# Configuration de la clé API
+
+Créez un fichier `.env` dans le dossier `backend/` avec le contenu suivant :
+    API_KEY=devsecops-demo-secret-CHANGEME
+Ne poussez jamais votre vraie clé dans le dépôt !
