@@ -7,34 +7,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-  steps:
-    - uses: actions/checkout@v4
-
-    - uses: actions/setup-python@v5
-      with:
-        python-version: "3.11.2"
-
-    - run: pip install pre-commit
-    - run: pre-commit run --all-files
-
-    - name: Installer dépendances backend
-      run: pip install -r backend/requirements.txt pytest pytest-benchmark pytest-cov httpx
-    - name: Lancer les tests backend
-      run: PYTHONPATH=backend pytest --cov=backend/app backend/tests
-    - name: Installer Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    - name: Installer dépendances frontend
-      run: |
-        cd frontend
-        npm install eslint stylelint stylelint-config-standard jest playwright
-    - name: Linter JS
-      run: cd frontend && npx eslint app.js
-    - name: Linter CSS
-      run: cd frontend && npx stylelint styles.css
-    - name: Test JS unitaire
-      run: cd frontend && npx jest test_app.js
-    - name: Test E2E Playwright
-      run: cd frontend && npx playwright test e2e.spec.js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.2"
+      - run: pip install pre-commit
+      - run: pre-commit run --all-files
+      - name: Installer dépendances backend
+        run: pip install -r backend/requirements.txt pytest pytest-benchmark pytest-cov httpx
+      - name: Lancer les tests backend
+        run: PYTHONPATH=backend pytest --cov=backend/app backend/tests
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Installer dépendances frontend
+        run: |
+          cd frontend
+          npm install eslint stylelint stylelint-config-standard jest playwright
+      - name: Linter JS
+        run: cd frontend && npx eslint app.js
+      - name: Linter CSS
+        run: cd frontend && npx stylelint styles.css
+      - name: Test JS unitaire
+        run: cd frontend && npx jest test_app.js
+      - name: Test E2E Playwright
+        run: cd frontend && npx playwright test e2e.spec.js
