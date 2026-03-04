@@ -66,7 +66,10 @@ def admin_stats(x_api_key: str | None = Header(default=None)):
 
 @app.post("/import")
 def import_yaml(payload: str = Body(embed=True)):
-    data = yaml.full_load(payload)
+    try:
+        data = yaml.safe_load(payload)
+    except yaml.YAMLError as e:
+        raise HTTPException(status_code=400, detail=f"YAML error: {e}")
     return {"imported": True, "keys": list(data.keys()) if isinstance(data, dict) else "n/a"}
 
 @app.get("/tasks", response_model=list[TaskOut])
