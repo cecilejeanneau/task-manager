@@ -7,36 +7,32 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <main class="container">
-    <header class="header">
+  <main class="container" role="main">
+    <header class="header" role="banner">
       <h1>Task Manager</h1>
       <p>Mini app fil rouge pour CI/CD + tests</p>
     </header>
 
-    <section class="card">
-      <h2>Créer une tâche</h2>
-      <form id="createForm">
-        <label>
-          Titre
-          <input id="title" type="text" required maxlength="200" placeholder="Ex: Écrire les tests API" />
-        </label>
-        <label>
-          Description (optionnel)
-          <textarea id="description" maxlength="1000" placeholder="Détails..."></textarea>
-        </label>
-        <button type="submit">Créer</button>
+    <section class="card" aria-labelledby="createTitle">
+      <h2 id="createTitle">Créer une tâche</h2>
+      <form id="createForm" aria-label="Créer une tâche">
+        <label for="title">Titre</label>
+        <input id="title" type="text" required maxlength="200" placeholder="Ex: Écrire les tests API" aria-required="true" aria-label="Titre de la tâche" />
+        <label for="description">Description (optionnel)</label>
+        <textarea id="description" maxlength="1000" placeholder="Détails..." aria-label="Description de la tâche"></textarea>
+        <button type="submit" aria-label="Créer la tâche">Créer</button>
       </form>
     </section>
 
-    <section class="card">
+    <section class="card" aria-labelledby="listTitle">
       <div class="row">
-        <h2>Liste des tâches</h2>
-        <button id="refreshBtn" type="button">Rafraîchir</button>
+        <h2 id="listTitle">Liste des tâches</h2>
+        <button id="refreshBtn" type="button" aria-label="Rafraîchir la liste des tâches">Rafraîchir</button>
       </div>
-      <div id="tasks"></div>
+      <div id="tasks" role="list"></div>
     </section>
 
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
       <small>API attendue sur <code id="apiUrlLabel"></code></small>
     </footer>
   </main>
