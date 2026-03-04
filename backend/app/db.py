@@ -1,20 +1,26 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-# SQLite local file. In CI, you can swap to Postgres later.
-DATABASE_URL = "sqlite:///./taskmanager.db"
+load_dotenv()
+
+# Utilise DATABASE_URL depuis l'environnement, fallback sqlite local
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./taskmanager.db")
+
+engine_args = {}
+if DATABASE_URL.startswith("sqlite"):  # Pour SQLite, threads
+    engine_args["connect_args"] = {"check_same_thread": False}
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False},  # needed for SQLite + threads
+    **engine_args
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
 class Base(DeclarativeBase):
     pass
-
 
 def get_db():
     db = SessionLocal()

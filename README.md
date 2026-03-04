@@ -51,3 +51,10 @@ curl -i -X DELETE http://127.0.0.1:8000/tasks/1
 Créez un fichier `.env` dans le dossier `backend/` avec le contenu suivant :
     API_KEY=devsecops-demo-secret-CHANGEME
 Ne poussez jamais votre vraie clé dans le dépôt !
+
+# Configuration de la base de données
+
+Ajoutez dans votre `.env` :
+    DATABASE_URL=CHANGEME
+
+
