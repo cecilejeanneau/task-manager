@@ -72,4 +72,32 @@ Pour vérifier la qualité du code JavaScript et CSS dans le dossier `frontend/`
 
 Adaptez les règles dans `.eslintrc.json` et `.stylelintrc.json` selon vos besoins.
 
+# Couverture de tests backend
 
+Pour générer un rapport de couverture :
+
+    pytest --cov=app backend/tests
+
+Le rapport s’affichera dans le terminal. Pour un rapport HTML :
+
+    pytest --cov=app --cov-report=html backend/tests
+
+Le dossier htmlcov/ contiendra le rapport détaillé.
+
+# Dépendances de test backend
+
+Pour exécuter les tests backend, installez aussi httpx :
+
+    pip install -r backend/requirements.txt
+
+Cela installera toutes les dépendances nécessaires (dont httpx pour les tests FastAPI).
+
+# Tests backend
+
+Pour exécuter tous les tests backend avec la couverture :
+
+    pip install -r backend/requirements.txt
+    pip install pytest-benchmark
+    PYTHONPATH=backend pytest --cov=backend/app backend/tests
+
+Cela garantit que toutes les dépendances de test sont installées et que les imports fonctionnent.
