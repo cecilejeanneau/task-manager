@@ -14,4 +14,4 @@
 *.tmp
 
 # Ignore SQLite database file
-backend/app/taskmanager.db
+backend/taskmanager.db
