@@ -5,7 +5,8 @@ import yaml
 from fastapi import FastAPI, Body, Depends, Header, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from starlette.responses import Response
+
+# from starlette.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import select, text
@@ -15,14 +16,14 @@ from .db import Base, engine, get_db
 from .models import Task
 from .schemas import TaskCreate, TaskUpdate, TaskOut
 
-from dotenv import load_dotenv
+
 load_dotenv()  # Load environment variables from .env file if present
 
-load_dotenv()
 API_KEY = os.environ.get("API_KEY", "devsecops-demo-secret-CHANGEME")
 
 
 app = FastAPI(title="Task Manager API", version="1.0.0")
+
 
 class CacheStaticFiles(StaticFiles):
     async def get_response(self, path, scope):
@@ -32,22 +33,27 @@ class CacheStaticFiles(StaticFiles):
             response.headers["Cache-Control"] = "public, max-age=86400"
         return response
 
-frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend'))
+
+frontend_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../frontend")
+)
 app.mount("/static", CacheStaticFiles(directory=frontend_path), name="static")
+
+
 @app.get("/")
 def serve_frontend():
-    index_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/index.html'))
+    index_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "../../frontend/index.html")
+    )
     if os.path.exists(index_path):
         return FileResponse(index_path, media_type="text/html")
     return {"message": "Frontend not found. Please build or add index.html."}
 
+
 # Allow local frontend (file:// or http://localhost) during training
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-    ],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,9 +68,11 @@ def debug(x_api_key: str | None = Header(default=None)):
         raise HTTPException(status_code=401, detail="Unauthorized")
     return {"env": dict(os.environ)}
 
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
 
 @app.get("/admin/stats")
 def admin_stats(x_api_key: str | None = Header(default=None)):
@@ -72,13 +80,18 @@ def admin_stats(x_api_key: str | None = Header(default=None)):
         raise HTTPException(status_code=401, detail="Unauthorized")
     return {"tasks": "…"}
 
+
 @app.post("/import")
 def import_yaml(payload: str = Body(embed=True)):
     try:
         data = yaml.safe_load(payload)
     except yaml.YAMLError as e:
         raise HTTPException(status_code=400, detail=f"YAML error: {e}")
-    return {"imported": True, "keys": list(data.keys()) if isinstance(data, dict) else "n/a"}
+    return {
+        "imported": True,
+        "keys": list(data.keys()) if isinstance(data, dict) else "n/a",
+    }
+
 
 @app.get("/tasks", response_model=list[TaskOut])
 def list_tasks(db: Session = Depends(get_db)):
@@ -88,7 +101,9 @@ def list_tasks(db: Session = Depends(get_db)):
 
 @app.post("/tasks", response_model=TaskOut, status_code=201)
 def create_task(payload: TaskCreate, db: Session = Depends(get_db)):
-    task = Task(title=payload.title.strip(), description=payload.description, status="TODO")
+    task = Task(
+        title=payload.title.strip(), description=payload.description, status="TODO"
+    )
     db.add(task)
     db.commit()
     db.refresh(task)
