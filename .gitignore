@@ -1,0 +1,17 @@
+# Python virtual environments
+**/.venv/
+**/venv/
+
+# Python cache files
+**/__pycache__/
+*.pyc
+
+# Ruff cache
+.ruff_cache/
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+
+# Ignore SQLite database file
+backend/app/taskmanager.db
