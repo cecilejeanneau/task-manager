@@ -57,4 +57,19 @@ Ne poussez jamais votre vraie clé dans le dépôt !
 Ajoutez dans votre `.env` :
     DATABASE_URL=CHANGEME
 
+# Qualité du code frontend
+
+Pour vérifier la qualité du code JavaScript et CSS dans le dossier `frontend/` :
+- Installe ESLint et Stylelint (si besoin) :
+      npm install -g eslint stylelint stylelint-config-standard
+
+- Pour vérifier le JS :
+      cd frontend
+      eslint app.js
+
+- Pour vérifier le CSS :
+      stylelint styles.css
+
+Adaptez les règles dans `.eslintrc.json` et `.stylelintrc.json` selon vos besoins.
+
 
