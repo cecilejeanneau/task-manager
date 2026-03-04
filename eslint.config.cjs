@@ -1,6 +1,6 @@
-import js from "@eslint/js";
+const js = require("@eslint/js");
 
-export default [
+module.exports = [
   js.configs.recommended,
   {
     languageOptions: {
@@ -13,6 +13,12 @@ export default [
         confirm: "readonly"
       }
     },
+    rules: {
+      "no-unused-vars": "warn",
+      "no-console": "off"
+    }
+  },
+  {
     files: ["frontend/**/*.test.js", "frontend/**/*.spec.js"],
     linterOptions: {
       globals: {
@@ -24,11 +30,6 @@ export default [
         beforeEach: "readonly",
         afterEach: "readonly"
       }
-    }
-    },
-    rules: {
-      "no-unused-vars": "warn",
-      "no-console": "off"
     }
   }
 ];

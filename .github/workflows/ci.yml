@@ -29,7 +29,7 @@ jobs:
       - name: Installer ESLint (racine)
         run: npm install --save-dev eslint @eslint/js
       - name: Linter JS
-        run: npx eslint frontend/app.js
+        run: npx eslint --config eslint.config.cjs frontend/app.js
       - name: Linter CSS
         run: cd frontend && npx stylelint styles.css
       - name: Test JS unitaire
