@@ -5,6 +5,7 @@ import yaml
 from fastapi import FastAPI, Body, Depends, Header, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import select, text
@@ -23,9 +24,16 @@ API_KEY = os.environ.get("API_KEY", "devsecops-demo-secret-CHANGEME")
 
 app = FastAPI(title="Task Manager API", version="1.0.0")
 
-# Serve static files from the frontend directory
+class CacheStaticFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        # Cache 1 jour pour les fichiers statiques
+        if response.status_code == 200:
+            response.headers["Cache-Control"] = "public, max-age=86400"
+        return response
+
 frontend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend'))
-app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+app.mount("/static", CacheStaticFiles(directory=frontend_path), name="static")
 @app.get("/")
 def serve_frontend():
     index_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/index.html'))
