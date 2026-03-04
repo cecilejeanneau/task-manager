@@ -49,7 +49,9 @@ Base.metadata.create_all(bind=engine)
 
 
 @app.get("/debug")
-def debug():
+def debug(x_api_key: str | None = Header(default=None)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Unauthorized")
     return {"env": dict(os.environ)}
 
 @app.get("/health")
