@@ -25,9 +25,11 @@ jobs:
       - name: Installer dépendances frontend
         run: |
           cd frontend
-          npm install eslint stylelint stylelint-config-standard jest playwright
+          npm install stylelint stylelint-config-standard jest playwright
+      - name: Installer ESLint (racine)
+        run: npm install --save-dev eslint @eslint/js
       - name: Linter JS
-        run: cd frontend && npx eslint app.js
+        run: npx eslint frontend/app.js
       - name: Linter CSS
         run: cd frontend && npx stylelint styles.css
       - name: Test JS unitaire

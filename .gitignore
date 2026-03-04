@@ -19,5 +19,5 @@ backend/taskmanager.db
 # Ignore env files
 .env
 
-# node_modules pour le frontend
-frontend/node_modules/
+# node_modules
+node_modules/

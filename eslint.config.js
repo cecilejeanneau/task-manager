@@ -1,20 +1,18 @@
+import js from "@eslint/js";
+
 export default [
+  js.configs.recommended,
   {
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: "module",
       globals: {
         window: "readonly",
-        document: "readonly"
+        document: "readonly",
+        fetch: "readonly",
+        confirm: "readonly"
       }
     },
-    linterOptions: {
-      env: {
-        browser: true,
-        es2021: true
-      }
-    },
-    extends: ["eslint:recommended"],
     rules: {
       "no-unused-vars": "warn",
       "no-console": "off"
