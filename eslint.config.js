@@ -13,6 +13,19 @@ export default [
         confirm: "readonly"
       }
     },
+    files: ["frontend/**/*.test.js", "frontend/**/*.spec.js"],
+    linterOptions: {
+      globals: {
+        test: "readonly",
+        expect: "readonly",
+        require: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly"
+      }
+    }
+    },
     rules: {
       "no-unused-vars": "warn",
       "no-console": "off"
