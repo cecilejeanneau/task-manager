@@ -1,6 +1,6 @@
-// Change this if your API runs elsewhere (CI, container, remote)
-const API_URL = (localStorage.getItem("API_URL") || "http://127.0.0.1:8000");
-document.getElementById("apiUrlLabel").textContent = API_URL;
+// Mode production : URL de l'API fixée ici
+const API_URL = "https://api.monsite.com"; // À adapter pour ta prod
+// document.getElementById("apiUrlLabel").textContent = API_URL;
 
 async function api(path, options = {}) {
   const res = await fetch(`${API_URL}${path}`, {
