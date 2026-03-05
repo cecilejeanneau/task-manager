@@ -33,7 +33,7 @@ jobs:
       - name: Linter CSS
         run: cd frontend && npx stylelint styles.css
       - name: Test JS unitaire
-        run: cd frontend && npx jest test_app.test.cjs
+        run: cd frontend && npx jest test_app.test.js
       - name: Démarrer le backend
         run: |
           cd backend
