@@ -60,8 +60,9 @@ jobs:
 
 
 
+
       - name: Scan backend image (Snyk)
-        uses: snyk/actions/docker@v2
+        uses: snyk/actions/docker@v0.5.0
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -72,8 +73,9 @@ jobs:
 
 
 
+
       - name: Scan frontend image (Snyk)
-        uses: snyk/actions/docker@v2
+        uses: snyk/actions/docker@v0.5.0
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
@@ -97,8 +99,3 @@ jobs:
           docker push ghcr.io/${{ github.repository }}/frontend-app:latest
 
 
-
-
-
-      # Analyse docker-compose supprimée : Snyk ne supporte pas directement docker-compose.yml
-          scan-ref: 'docker-compose.yml'
