@@ -101,3 +101,44 @@ Pour exécuter tous les tests backend avec la couverture :
     PYTHONPATH=backend pytest --cov=backend/app backend/tests
 
 Cela garantit que toutes les dépendances de test sont installées et que les imports fonctionnent.
+
+# DevSecOps CI/CD – Documentation rapide
+
+## 1. Qualité et tests
+- Lint et tests unitaires backend (pytest, flake8) et frontend (ESLint, Jest, Playwright) sont lancés à chaque push/pull request.
+
+## 2. Conteneurisation
+- Les images Docker backend et frontend sont construites automatiquement.
+
+## 3. Sécurité
+- Scan de vulnérabilités sur les images Docker et la recette docker-compose avec Trivy.
+
+## 4. Publication
+- Les images sont poussées sur GitHub Container Registry (ghcr.io).
+
+## 5. Déploiement
+- Un fichier docker-compose.yml permet de lancer l’ensemble localement ou en production.
+
+## 6. CI/CD
+- Tout est automatisé via GitHub Actions dans .github/workflows/ci.yml.
+
+---
+
+### Lancer le projet localement
+```bash
+docker-compose up --build
+```
+
+### Accéder aux applications
+- Backend : http://localhost:8000
+- Frontend : http://localhost:8080
+
+### Personnaliser la registry
+- Modifier les tags dans le workflow CI si besoin.
+
+### Sécurité
+- Les scans Trivy sont visibles dans les logs CI.
+
+---
+
+Pour toute question, voir le workflow ou les Dockerfile pour adapter à vos besoins.
