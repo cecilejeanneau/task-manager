@@ -33,6 +33,6 @@ jobs:
       - name: Linter CSS
         run: cd frontend && npx stylelint styles.css
       - name: Test JS unitaire
-        run: cd frontend && npx jest test_app.test.js
+        run: cd frontend && npx jest test_app.test.cjs
       - name: Test E2E Playwright
         run: cd frontend && npx playwright test e2e.spec.js

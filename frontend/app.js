@@ -51,14 +51,9 @@ function taskCard(task) {
   return div;
 }
 
-function escapeHtml(s) {
-  return String(s)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+
+// Import de la fonction escapeHtml depuis utils.js
+import { escapeHtml } from "./utils.js";
 
 async function refresh() {
   const container = document.getElementById("tasks");
