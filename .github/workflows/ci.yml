@@ -44,5 +44,7 @@ jobs:
           cd frontend
           nohup python3 -m http.server 5173 &
           sleep 3
+      - name: Installer les navigateurs Playwright
+        run: cd frontend && npx playwright install
       - name: Test E2E Playwright
         run: cd frontend && npx playwright test e2e.spec.js
