@@ -57,17 +57,27 @@ jobs:
 
 
 
-      - name: Scan backend image (Trivy)
-        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
+
+
+
+      - name: Scan backend image (Snyk)
+        uses: snyk/actions/docker@v2
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image-ref: backend-app:ci
+          image: backend-app:ci
 
 
 
-      - name: Scan frontend image (Trivy)
-        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
+
+
+
+      - name: Scan frontend image (Snyk)
+        uses: snyk/actions/docker@v2
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image-ref: frontend-app:ci
+          image: frontend-app:ci
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -88,8 +98,7 @@ jobs:
 
 
 
-      - name: Analyse docker-compose (Trivy)
-        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
-        with:
-          scan-type: 'config'
+
+
+      # Analyse docker-compose supprimée : Snyk ne supporte pas directement docker-compose.yml
           scan-ref: 'docker-compose.yml'
