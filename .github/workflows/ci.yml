@@ -55,13 +55,15 @@ jobs:
       - name: Build Docker image frontend
         run: docker build -t frontend-app:ci ./frontend
 
+
       - name: Scan backend image (Trivy)
-        uses: aquasecurity/trivy-action@v0.14.0
+        uses: aquasecurity/trivy-action@v0.34.2
         with:
           image-ref: backend-app:ci
 
+
       - name: Scan frontend image (Trivy)
-        uses: aquasecurity/trivy-action@v0.14.0
+        uses: aquasecurity/trivy-action@v0.34.2
         with:
           image-ref: frontend-app:ci
 
@@ -82,8 +84,9 @@ jobs:
           docker tag frontend-app:ci ghcr.io/${{ github.repository }}/frontend-app:latest
           docker push ghcr.io/${{ github.repository }}/frontend-app:latest
 
+
       - name: Analyse docker-compose (Trivy)
-        uses: aquasecurity/trivy-action@v0.14.0
+        uses: aquasecurity/trivy-action@v0.34.2
         with:
           scan-type: 'config'
           scan-ref: 'docker-compose.yml'
