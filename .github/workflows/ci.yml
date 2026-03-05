@@ -56,14 +56,16 @@ jobs:
         run: docker build -t frontend-app:ci ./frontend
 
 
+
       - name: Scan backend image (Trivy)
-        uses: aquasecurity/trivy-action@v0.34.2
+        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
         with:
           image-ref: backend-app:ci
 
 
+
       - name: Scan frontend image (Trivy)
-        uses: aquasecurity/trivy-action@v0.34.2
+        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
         with:
           image-ref: frontend-app:ci
 
@@ -85,8 +87,9 @@ jobs:
           docker push ghcr.io/${{ github.repository }}/frontend-app:latest
 
 
+
       - name: Analyse docker-compose (Trivy)
-        uses: aquasecurity/trivy-action@v0.34.2
+        uses: aquasecurity/trivy-action@97e0b38b7e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2
         with:
           scan-type: 'config'
           scan-ref: 'docker-compose.yml'
