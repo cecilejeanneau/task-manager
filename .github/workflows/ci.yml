@@ -48,51 +48,32 @@ jobs:
         run: cd frontend && npx playwright install
       - name: Test E2E Playwright
         run: cd frontend && npx playwright test e2e.spec.js
-
       - name: Build Docker image backend
         run: docker build -t backend-app:ci ./backend
-
       - name: Build Docker image frontend
         run: docker build -t frontend-app:ci ./frontend
-
-
-
-
-
-
-
       - name: Scan backend image (Snyk)
         uses: snyk/actions/docker@v0.5.0
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: backend-app:ci
-
-
-
-
-
-
-
       - name: Scan frontend image (Snyk)
         uses: snyk/actions/docker@v0.5.0
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: frontend-app:ci
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Tag & Push backend image
         run: |
           docker tag backend-app:ci ghcr.io/${{ github.repository }}/backend-app:latest
           docker push ghcr.io/${{ github.repository }}/backend-app:latest
-
       - name: Tag & Push frontend image
         run: |
           docker tag frontend-app:ci ghcr.io/${{ github.repository }}/frontend-app:latest
