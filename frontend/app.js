@@ -1,5 +1,5 @@
 // Mode production : URL de l'API fixée ici
-const API_URL = "https://api.monsite.com"; // À adapter pour ta prod
+const API_URL = "http://127.0.0.1:8000"; // À adapter pour ta prod
 // document.getElementById("apiUrlLabel").textContent = API_URL;
 
 async function api(path, options = {}) {

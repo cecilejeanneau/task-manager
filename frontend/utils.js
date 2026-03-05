@@ -1,5 +1,4 @@
-// Fonctions utilitaires réutilisables
-function escapeHtml(s) {
+export function escapeHtml(s) {
   return String(s)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -7,5 +6,3 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
-
-module.exports = { escapeHtml };
