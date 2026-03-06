@@ -8,7 +8,7 @@ COPY . /app/
 RUN npm install && npm install --save-dev stylelint stylelint-config-standard jest playwright eslint @eslint/js
 
 # Linter JS
-RUN npx eslint --config ../eslint.config.cjs app.js
+RUN npx eslint --config eslint.config.cjs app.js
 
 # Linter CSS
 RUN npx stylelint styles.css
