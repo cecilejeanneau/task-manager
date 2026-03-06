@@ -2,7 +2,9 @@
 FROM node:20
 
 WORKDIR /app
-COPY . /app/
+# Copier le dossier frontend et le fichier de config ESLint depuis la racine
+COPY frontend/ /app/
+COPY eslint.config.cjs /app/eslint.config.cjs
 
 # Installer toutes les dépendances (prod + dev)
 RUN npm install && npm install --save-dev stylelint stylelint-config-standard jest playwright eslint @eslint/js
