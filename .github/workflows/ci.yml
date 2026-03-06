@@ -1,8 +1,10 @@
+
 name: CI
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -78,5 +80,3 @@ jobs:
         run: |
           docker tag frontend-app:ci ghcr.io/${{ github.repository }}/frontend-app:latest
           docker push ghcr.io/${{ github.repository }}/frontend-app:latest
-
-
