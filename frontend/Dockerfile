@@ -1,18 +1,26 @@
+
 FROM node:20
 
 WORKDIR /app
 COPY . /app/
 
-RUN npm install --omit=dev && npm install --save-dev jest playwright
+# Installer toutes les dépendances (prod + dev)
+RUN npm install && npm install --save-dev stylelint stylelint-config-standard jest playwright eslint @eslint/js
 
-# Lint (si présent)
-RUN if [ -f eslint.config.cjs ]; then npx eslint app.js; fi
+# Linter JS
+RUN npx eslint --config ../eslint.config.cjs app.js
 
-# Tests unitaires
-RUN npx jest --ci --runInBand
+# Linter CSS
+RUN npx stylelint styles.css
 
-# Tests end-to-end
-RUN npx playwright install && npx playwright test e2e.spec.js
+# Tests unitaires (en ignorant e2e.spec.js)
+RUN npx jest --ci --runInBand --testPathIgnorePatterns="e2e\\.spec\\.js"
+
+# Installer les navigateurs Playwright
+RUN npx playwright install
+
+# Tests end-to-end Playwright
+RUN npx playwright test e2e.spec.js
 
 EXPOSE 8080
 CMD ["npx", "http-server", ".", "-p", "8080"]
