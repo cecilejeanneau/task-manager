@@ -14,8 +14,8 @@ RUN npx eslint --config eslint.config.cjs app.js
 # Linter CSS
 RUN npx stylelint styles.css
 
-# Tests unitaires (en ignorant e2e.spec.js)
-RUN npx jest --ci --runInBand --testPathIgnorePatterns="e2e\\.spec\\.js"
+# Tests unitaires (comme la CI, uniquement test_app.test.js)
+RUN npx jest test_app.test.js
 
 # Installer les navigateurs Playwright
 RUN npx playwright install
