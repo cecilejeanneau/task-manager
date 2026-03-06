@@ -34,10 +34,13 @@ class CacheStaticFiles(StaticFiles):
         return response
 
 
-frontend_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../frontend")
-)
-app.mount("/static", CacheStaticFiles(directory=frontend_path), name="static")
+# Monter les fichiers statiques seulement si demandé et si le dossier existe
+if os.environ.get("SERVE_FRONTEND_STATIC", "0") == "1":
+    frontend_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "../../frontend")
+    )
+    if os.path.isdir(frontend_path):
+        app.mount("/static", CacheStaticFiles(directory=frontend_path), name="static")
 
 
 @app.get("/")
