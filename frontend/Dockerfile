@@ -7,6 +7,8 @@ COPY . /app/
 # Installer toutes les dépendances (prod + dev)
 RUN npm install && npm install --save-dev stylelint stylelint-config-standard jest playwright eslint @eslint/js
 
+# Copier le fichier de config ESLint depuis la racine si absent
+COPY ../eslint.config.cjs ./eslint.config.cjs
 # Linter JS
 RUN npx eslint --config eslint.config.cjs app.js
 
